@@ -3,19 +3,19 @@ package saucedemo_test.cucumber.stepDef;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+
 import java.util.concurrent.TimeUnit;
 
-public class Addtocart {
+public class Checkout {
     WebDriver driver;
     String baseURL="https://www.saucedemo.com/";
-    @Given(":User login")
-    public void userLogin() {
+    @Given("User Login With Username and Password")
+    public void userLoginWithUsernameAndPassword() {
         WebDriverManager.chromedriver().setup();
         driver= new ChromeDriver();
         driver.manage().window().maximize();
@@ -28,21 +28,24 @@ public class Addtocart {
         Assert.assertEquals(loginPageAssert,"Products");
     }
 
-    @When(":User Click title of item")
-    public void userClickTitleOfItem() {
+    @And("User add item to cart")
+    public void userAddItemToCart() {
         driver.findElement(By.xpath("//a[@id='item_4_title_link']")).click();
-    }
-
-    @And(":User click Add to cart button")
-    public void userClickAddToCartButton() {
         driver.findElement(By.xpath("//button[@id='add-to-cart-sauce-labs-backpack']")).click();
+
     }
 
-    @Then(": Cart Filled")
-    public void cartFilled() {
-        String CartAssert = driver.findElement(By.xpath("//span[contains(text(),'1')]")).getText();
-        Assert.assertEquals(CartAssert,"1");
+    @And("User Clicked Icon Cart")
+    public void userClickedIconCart() {
+        driver.findElement(By.xpath("//a[@class='shopping_cart_link']")).click();
     }
 
+    @And("User Click Checkout Button")
+    public void userClickCheckoutButton() {
+        driver.findElement(By.xpath("//button[@id='checkout']")).click();
+    }
 
+    @Then("Redirect to form checkout Information")
+    public void redirectToFormCheckoutInformation() {
+    }
 }

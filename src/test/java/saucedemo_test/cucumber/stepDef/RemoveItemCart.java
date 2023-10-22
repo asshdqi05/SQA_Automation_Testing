@@ -11,11 +11,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.concurrent.TimeUnit;
 
-public class Addtocart {
+public class RemoveItemCart {
     WebDriver driver;
     String baseURL="https://www.saucedemo.com/";
-    @Given(":User login")
-    public void userLogin() {
+
+    @Given(":User login to web")
+    public void userLoginRmItem() {
         WebDriverManager.chromedriver().setup();
         driver= new ChromeDriver();
         driver.manage().window().maximize();
@@ -28,21 +29,19 @@ public class Addtocart {
         Assert.assertEquals(loginPageAssert,"Products");
     }
 
-    @When(":User Click title of item")
-    public void userClickTitleOfItem() {
+    @When(": User Click Icon Cart")
+    public void userClickIconCart() {
         driver.findElement(By.xpath("//a[@id='item_4_title_link']")).click();
-    }
-
-    @And(":User click Add to cart button")
-    public void userClickAddToCartButton() {
         driver.findElement(By.xpath("//button[@id='add-to-cart-sauce-labs-backpack']")).click();
+        driver.findElement(By.xpath("//a[@class='shopping_cart_link']")).click();
     }
 
-    @Then(": Cart Filled")
-    public void cartFilled() {
-        String CartAssert = driver.findElement(By.xpath("//span[contains(text(),'1')]")).getText();
-        Assert.assertEquals(CartAssert,"1");
+    @And(":User Click Remove Button")
+    public void userClickRemoveButton() {
+        driver.findElement(By.xpath("//button[@id='remove-sauce-labs-backpack']")).click();
     }
 
-
+    @Then(":Item Removed")
+    public void itemRemoved() {
+    }
 }
